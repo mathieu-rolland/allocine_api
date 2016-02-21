@@ -11,6 +11,7 @@ import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
+import com.api.allocine.model.ISearchResponse;
 import com.api.allocine.model.IStats;
 
 public interface IFactory {
@@ -26,5 +27,6 @@ public interface IFactory {
 	public IStats createStats();
 	public <T> T create(Type type);
 	public IAllocineAPI createSimpleAllocineAPI();
+	public ISearchResponse createSearchResponse();
 	
 }

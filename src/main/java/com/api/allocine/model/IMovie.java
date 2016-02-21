@@ -20,4 +20,12 @@ public interface IMovie {
 
 	public int getCode();
 
+	public void setSynospis(String asString);
+
+	public int getDuration();
+	
+	public void setDuration(int duration);
+	
+	public void addLink( IAllocineLink link );
+	
 }

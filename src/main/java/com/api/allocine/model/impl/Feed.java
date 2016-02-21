@@ -46,11 +46,11 @@ public class Feed implements IFeed{
 		this.totalResults = totalResults;
 	}
 
-	public ArrayList<IMovie> getMovie() {
+	public ArrayList<IMovie> getMovies() {
 		return movie;
 	}
 
-	public void setMovie(ArrayList<IMovie> movie) {
+	public void setMovies(ArrayList<IMovie> movie) {
 		this.movie = movie;
 	}
 

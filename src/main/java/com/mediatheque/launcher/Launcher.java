@@ -17,8 +17,8 @@ public class Launcher {
 		ISearchResponse response =  api.searchMovies( "potter" );
 		IFeed content = response.getFeed();
 		
-		if( content.getMovie() != null ){
-			for( IMovie m : content.getMovie() ){
+		if( content.getMovies() != null ){
+			for( IMovie m : content.getMovies() ){
 				api.getMovieDetails(m);
 			}
 		}

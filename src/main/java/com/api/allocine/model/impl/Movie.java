@@ -24,12 +24,13 @@ public class Movie implements IMovie{
 	private ICasting casting;
 	private IStats statistiques;
 	private IPoster poster;
-	private Collection<IAllocineLink> link;
+	private Collection<IAllocineLink> links;
 	private IGenre genre;
 	private String synospis;
+	private int duration;
 	
 	public Movie(){
-		link = new ArrayList<IAllocineLink>();
+		links = new ArrayList<IAllocineLink>();
 		release = new Release();
 //		casting = new Casting();
 		statistiques = new Stats();
@@ -102,11 +103,11 @@ public class Movie implements IMovie{
 	}
 	
 	public Collection<IAllocineLink> getLink() {
-		return link;
+		return links;
 	}
 	
 	public void setLink(Collection<IAllocineLink> link) {
-		this.link = link;
+		this.links = link;
 	}
 	
 	public IGenre getGenre() {
@@ -133,12 +134,26 @@ public class Movie implements IMovie{
 		this.keywords = keywords;
 	}
 
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+	public void addLink( IAllocineLink link ){
+		this.links.add(link);
+	}
+
 	@Override
 	public String toString() {
-		return "Movie [code=" + code + ", title=" + originalTitle + ", year=" + year
-				+ ", release=" + release + ", casting=" + casting
+		return "Movie [code=" + code + ", originalTitle=" + originalTitle
+				+ ", title=" + title + ", keywords=" + keywords + ", year="
+				+ year + ", release=" + release + ", casting=" + casting
 				+ ", statistiques=" + statistiques + ", poster=" + poster
-				+ ", link=" + link + "]";
+				+ ", links=" + links + ", genre=" + genre + ", synospis="
+				+ synospis + ", duration=" + duration + "]";
 	}
 	
 }

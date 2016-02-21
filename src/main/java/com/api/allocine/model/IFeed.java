@@ -11,7 +11,7 @@ public interface IFeed {
 	public void setResults(ArrayList<IResult> results);
 	public int getTotalResults();
 	public void setTotalResults(int totalResults);
-	public ArrayList<IMovie> getMovie();
-	public void setMovie(ArrayList<IMovie> movie);
+	public ArrayList<IMovie> getMovies();
+	public void setMovies(ArrayList<IMovie> movie);
 	
 }

@@ -17,8 +17,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.api.allocine.IAllocineAPI;
-import com.api.allocine.IAllocineAPI.ALLO_CINE_METHOD;
-import com.api.allocine.IAllocineAPI.ALLO_CINE_PARAMS;
 import com.api.allocine.decod.IDecoder;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;

@@ -6,6 +6,7 @@ public class AllocineLink implements IAllocineLink{
 
 	private String rel;
 	private String href;
+	private String name;
 	
 	public String getRel() {
 		return rel;
@@ -26,6 +27,14 @@ public class AllocineLink implements IAllocineLink{
 	@Override
 	public String toString() {
 		return "AllocineLink [rel=" + rel + ", href=" + href + "]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 }
