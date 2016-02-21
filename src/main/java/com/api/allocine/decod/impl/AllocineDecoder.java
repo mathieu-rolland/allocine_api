@@ -7,6 +7,7 @@ import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IFeed;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
+import com.api.allocine.model.IMovieResponse;
 import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;

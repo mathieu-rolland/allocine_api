@@ -27,5 +27,7 @@ public interface IMovie {
 	public void setDuration(int duration);
 	
 	public void addLink( IAllocineLink link );
+
+	public String getSynospis();
 	
 }

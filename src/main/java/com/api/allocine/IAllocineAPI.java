@@ -1,5 +1,6 @@
 package com.api.allocine;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import com.api.allocine.model.IJsonResponse;
@@ -33,8 +34,8 @@ public interface IAllocineAPI {
 		}
 	}
 	
-	public IJsonResponse httpQuery(ALLO_CINE_METHOD search, Map<ALLO_CINE_PARAMS, String> params);
-	public IMovieResponse getMovieDetails( IMovie movie );
-	public ISearchResponse searchMovies(String search);
+	public IJsonResponse httpQuery(ALLO_CINE_METHOD search, Map<ALLO_CINE_PARAMS, String> params) throws UnsupportedEncodingException;
+	public IMovieResponse getMovieDetails( IMovie movie ) throws UnsupportedEncodingException;
+	public ISearchResponse searchMovies(String search) throws UnsupportedEncodingException;
 	
 }

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -41,7 +42,7 @@ public class AllocineAPI implements IAllocineAPI {
 	}
 	
 	@Override
-	public IJsonResponse httpQuery( ALLO_CINE_METHOD method, Map<ALLO_CINE_PARAMS, String> params ){
+	public IJsonResponse httpQuery( ALLO_CINE_METHOD method, Map<ALLO_CINE_PARAMS, String> params ) throws UnsupportedEncodingException{
 		
 		String sed = sdf.format( new Date() );
 		
@@ -77,7 +78,7 @@ public class AllocineAPI implements IAllocineAPI {
 	}
 	
 	@Override
-	public ISearchResponse searchMovies( String search ){
+	public ISearchResponse searchMovies( String search ) throws UnsupportedEncodingException{
 		
 		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
 		
@@ -89,7 +90,7 @@ public class AllocineAPI implements IAllocineAPI {
 	}
 
 	@Override
-	public IMovieResponse getMovieDetails(IMovie movie) {
+	public IMovieResponse getMovieDetails(IMovie movie) throws UnsupportedEncodingException {
 		
 		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
 		
@@ -100,7 +101,7 @@ public class AllocineAPI implements IAllocineAPI {
 		return (IMovieResponse) httpQuery( ALLO_CINE_METHOD.MOVIE , params );
 	}
 	
-	private String formatParametersToHTTP ( Map<ALLO_CINE_PARAMS, String> params ){
+	private String formatParametersToHTTP ( Map<ALLO_CINE_PARAMS, String> params ) throws UnsupportedEncodingException{
 		String httpQuery = "";
 		
 		String q = params.get(ALLO_CINE_PARAMS.SEARCH);
@@ -115,7 +116,7 @@ public class AllocineAPI implements IAllocineAPI {
 		}
 		
 		if( q != null && !"".equals(q) ){
-			httpQuery += "&q=" + q;
+			httpQuery += "&q=" + URLEncoder.encode( q , "UTF-8");
 		}
 		
 		if( code != null && !"".equals(code)){
@@ -140,7 +141,7 @@ public class AllocineAPI implements IAllocineAPI {
 	
 	private String query(String query) throws MalformedURLException, IOException{
 		
-		URL url = new URL(query);
+		URL url = new URL( query );
 		InputStream in = url.openStream();
 		
 		BufferedReader br = new BufferedReader( new InputStreamReader(in) );
@@ -155,9 +156,9 @@ public class AllocineAPI implements IAllocineAPI {
 		return response;
 	}
 	
-	private IJsonResponse generateResponse( ALLO_CINE_METHOD method , String json ){
-		if( method == ALLO_CINE_METHOD.SEARCH )	return decoder.decodeSearchResponse(json);
-		if( method == ALLO_CINE_METHOD.MOVIE )  return decoder.decodeMovieResponse(json);
+	private IJsonResponse generateResponse( ALLO_CINE_METHOD method , String json ) throws UnsupportedEncodingException{
+		if( method == ALLO_CINE_METHOD.SEARCH )	return decoder.decodeSearchResponse( URLDecoder.decode( json , "UTF-8" ) );
+		if( method == ALLO_CINE_METHOD.MOVIE )  return decoder.decodeMovieResponse( json );
 		return null;
 	}
 	
