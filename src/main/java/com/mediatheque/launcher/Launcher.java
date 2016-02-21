@@ -1,14 +1,11 @@
 package com.mediatheque.launcher;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.api.allocine.IAllocineAPI;
-import com.api.allocine.IAllocineAPI.ALLO_CINE_METHOD;
-import com.api.allocine.IAllocineAPI.ALLO_CINE_PARAMS;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.factory.impl.AllocineFactory;
-import com.api.allocine.impl.AllocineAPI;
+import com.api.allocine.model.IFeed;
+import com.api.allocine.model.IMovie;
+import com.api.allocine.model.ISearchResponse;
 
 public class Launcher {
 
@@ -17,22 +14,24 @@ public class Launcher {
 		IFactory factory = new AllocineFactory();
 		IAllocineAPI api = factory.createSimpleAllocineAPI();
 		
-		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+		ISearchResponse response =  api.searchMovies( "potter" );
+		IFeed content = response.getFeed();
 		
-		params.put(ALLO_CINE_PARAMS.SEARCH, "potter");
-		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
-		params.put(ALLO_CINE_PARAMS.FILTER, "movie");
+		if( content.getMovie() != null ){
+			for( IMovie m : content.getMovie() ){
+				api.getMovieDetails(m);
+			}
+		}
 		
-		
-		api.httpQuery( ALLO_CINE_METHOD.SEARCH , params );
-		
-		params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
-		
-		params.put(ALLO_CINE_PARAMS.CODE, "58608");
-		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
-		params.put(ALLO_CINE_PARAMS.FILTER, "movie");
-		
-		api.httpQuery( ALLO_CINE_METHOD.MOVIE , params );
+//		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+//
+//		params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+//		
+//		params.put(ALLO_CINE_PARAMS.CODE, "58608");
+//		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
+//		params.put(ALLO_CINE_PARAMS.FILTER, "movie");
+//		
+//		api.httpQuery( ALLO_CINE_METHOD.MOVIE , params );
 		
 	}
 	

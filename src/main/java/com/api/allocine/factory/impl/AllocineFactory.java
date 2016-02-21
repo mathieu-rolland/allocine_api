@@ -3,6 +3,7 @@ package com.api.allocine.factory.impl;
 import java.lang.reflect.Type;
 
 import com.api.allocine.IAllocineAPI;
+import com.api.allocine.IAllocineAPI.RESPONSE_FORMAT;
 import com.api.allocine.decod.impl.AllocineDecoder;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.impl.AllocineAPI;
@@ -91,7 +92,7 @@ public class AllocineFactory implements IFactory{
 	}
 
 	public IAllocineAPI createSimpleAllocineAPI(){
-		return new AllocineAPI( new AllocineDecoder(this) );
+		return new AllocineAPI( new AllocineDecoder(this) , RESPONSE_FORMAT.JSON );
 	}
 	
 	@Override

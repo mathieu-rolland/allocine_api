@@ -49,7 +49,7 @@ public class AllocineDecoder implements IDecoder{
 
 	@Override
 	public IJsonResponse decodeMovieResponse(String json) {
-
+		System.out.println("Decoder not available " ); 
 		return null;
 	}
 	

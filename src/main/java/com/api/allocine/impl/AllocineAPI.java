@@ -10,14 +10,20 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.api.allocine.IAllocineAPI;
+import com.api.allocine.IAllocineAPI.ALLO_CINE_METHOD;
+import com.api.allocine.IAllocineAPI.ALLO_CINE_PARAMS;
 import com.api.allocine.decod.IDecoder;
 import com.api.allocine.model.IJsonResponse;
+import com.api.allocine.model.IMovie;
+import com.api.allocine.model.IMovieResponse;
+import com.api.allocine.model.ISearchResponse;
 
 public class AllocineAPI implements IAllocineAPI {
 
@@ -29,11 +35,14 @@ public class AllocineAPI implements IAllocineAPI {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	
 	private IDecoder decoder;
+	private RESPONSE_FORMAT responseFormat;
 	
-	public AllocineAPI( IDecoder decoder ){
+	public AllocineAPI( IDecoder decoder, RESPONSE_FORMAT format ){
 		this.decoder = decoder;
+		this.responseFormat = format;
 	}
 	
+	@Override
 	public IJsonResponse httpQuery( ALLO_CINE_METHOD method, Map<ALLO_CINE_PARAMS, String> params ){
 		
 		String sed = sdf.format( new Date() );
@@ -67,6 +76,30 @@ public class AllocineAPI implements IAllocineAPI {
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public ISearchResponse searchMovies( String search ){
+		
+		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+		
+		params.put(ALLO_CINE_PARAMS.SEARCH, search );
+		params.put(ALLO_CINE_PARAMS.FORMAT, String.valueOf( responseFormat ) );
+		params.put(ALLO_CINE_PARAMS.FILTER, String.valueOf( FILTER.MOVIE ) );
+		
+		return (ISearchResponse) httpQuery( ALLO_CINE_METHOD.SEARCH , params );
+	}
+
+	@Override
+	public IMovieResponse getMovieDetails(IMovie movie) {
+		
+		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+		
+		params.put(ALLO_CINE_PARAMS.CODE, String.valueOf(movie.getCode()) );
+		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
+		params.put(ALLO_CINE_PARAMS.FILTER, "movie");
+		
+		return (IMovieResponse) httpQuery( ALLO_CINE_METHOD.MOVIE , params );
 	}
 	
 	private String formatParametersToHTTP ( Map<ALLO_CINE_PARAMS, String> params ){

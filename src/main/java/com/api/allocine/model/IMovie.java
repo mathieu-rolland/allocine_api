@@ -18,4 +18,6 @@ public interface IMovie {
 
 	void setLink(Collection<IAllocineLink> link);
 
+	public int getCode();
+
 }
