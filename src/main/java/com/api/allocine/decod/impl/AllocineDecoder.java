@@ -7,7 +7,6 @@ import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IFeed;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
-import com.api.allocine.model.IMovieResponse;
 import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
@@ -42,6 +41,7 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IMovie.class , new MovieDecoder( factory ));
 		builder.registerTypeAdapter( ICasting.class , new CastingDecoder( factory ));
 		builder.registerTypeAdapter( IAllocineLink.class , new LinkDecoder( factory ));
+		builder.registerTypeAdapter(IPoster.class, new PosterDecoder(factory));
 		
 		
 		jsonParser = builder.create();
