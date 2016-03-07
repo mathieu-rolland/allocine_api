@@ -42,7 +42,7 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( ICasting.class , new CastingDecoder( factory ));
 		builder.registerTypeAdapter( IAllocineLink.class , new LinkDecoder( factory ));
 		builder.registerTypeAdapter(IPoster.class, new PosterDecoder(factory));
-		
+		builder.registerTypeAdapter(IStats.class , new StatsDecoder(factory));
 		
 		jsonParser = builder.create();
 		

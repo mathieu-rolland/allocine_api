@@ -36,7 +36,7 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 		JsonElement el = obj.get("code");
 		m.setCode( el.getAsInt() );
 
-		el = obj.get("originalTitle");
+		el = obj.get("title");
 		m.setTitle( el.getAsString() );
 
 		el = obj.get("synopsis");
@@ -74,6 +74,11 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 			Type collectionType = new TypeToken<Collection<IAllocineLink>>(){}.getType();
 			Collection<IAllocineLink> link = context.deserialize( el , collectionType	);
 			if( link != null )  m.setLink(link);
+		}
+		
+		el = obj.get("productionYear");
+		if( el != null ){
+			m.setYear( el.getAsInt() );
 		}
 		
 		System.out.println( m );

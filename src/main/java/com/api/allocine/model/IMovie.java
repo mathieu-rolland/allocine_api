@@ -29,5 +29,7 @@ public interface IMovie {
 	public void addLink( IAllocineLink link );
 
 	public String getSynospis();
+
+	public void setYear(int asInt);
 	
 }
