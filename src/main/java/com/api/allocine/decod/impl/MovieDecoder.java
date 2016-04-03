@@ -34,10 +34,10 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 		JsonObject obj = json.getAsJsonObject();
 
 		JsonElement el = obj.get("code");
-		m.setCode( el.getAsInt() );
+		if( el != null ) m.setCode( el.getAsInt() );
 
 		el = obj.get("title");
-		m.setTitle( el.getAsString() );
+		if( el != null ) m.setTitle( el.getAsString() );
 
 		el = obj.get("synopsis");
 		if( el != null ) m.setSynospis( el.getAsString() );

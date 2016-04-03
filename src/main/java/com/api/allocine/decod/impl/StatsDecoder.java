@@ -28,11 +28,11 @@ public class StatsDecoder implements JsonDeserializer<IStats>{
 		JsonObject obj = json.getAsJsonObject();
 
 		JsonElement el = obj.get("pressRating");
-		stats.setPressRating( el.getAsDouble() );
+		if(el != null ) stats.setPressRating( el.getAsDouble() );
 
 
 		el = obj.get("userRating");
-		stats.setUserRating( el.getAsDouble() );
+		if(el != null ) stats.setUserRating( el.getAsDouble() );
 		
 		return stats;
 	}

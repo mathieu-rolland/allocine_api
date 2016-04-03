@@ -27,7 +27,7 @@ public class PosterDecoder implements JsonDeserializer<IPoster>{
 		JsonObject obj = json.getAsJsonObject();
 
 		JsonElement el = obj.get("href");
-		poster.setHref( el.getAsString() );
+		if(el != null ) poster.setHref( el.getAsString() );
 		
 		return poster;
 	}
