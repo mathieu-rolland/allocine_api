@@ -5,7 +5,8 @@ import java.util.Collection;
 public interface IMovie {
 
 	void setTitle(String asString);
-
+	public String getTitle();
+	
 	void setCode(int asInt);
 
 	void setRelease(IRelease r);
