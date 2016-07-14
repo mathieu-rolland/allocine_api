@@ -65,7 +65,7 @@ public class AllocineAPI implements IAllocineAPI {
 		
 		try {
 			String response = query( query );
-			
+			System.out.println( response );
 			if( response != null && !"".equals(response)){
 				return generateResponse(method, response);
 			}
@@ -157,9 +157,15 @@ public class AllocineAPI implements IAllocineAPI {
 	}
 	
 	private IJsonResponse generateResponse( ALLO_CINE_METHOD method , String json ) throws UnsupportedEncodingException{
-		if( method == ALLO_CINE_METHOD.SEARCH )	return decoder.decodeSearchResponse( URLDecoder.decode( json , "UTF-8" ) );
-		if( method == ALLO_CINE_METHOD.MOVIE )  return decoder.decodeMovieResponse( json );
-		return null;
+		IJsonResponse response = null;
+		if( method == ALLO_CINE_METHOD.SEARCH ){
+			response = decoder.decodeSearchResponse( URLDecoder.decode( json , "UTF-8" ) );
+		}
+		if( method == ALLO_CINE_METHOD.MOVIE ){
+			response = decoder.decodeMovieResponse( json );
+		}
+		System.out.println( response );
+		return response;
 	}
 	
 }

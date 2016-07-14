@@ -1,5 +1,7 @@
 package com.api.allocine.decod.impl;
 
+import java.lang.reflect.Type;
+
 import com.api.allocine.decod.IDecoder;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IAllocineLink;
@@ -16,14 +18,18 @@ import com.api.allocine.model.impl.MovieResponse;
 import com.api.allocine.model.impl.SearchResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.InstanceCreator;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonSerializer;
 
 public class AllocineDecoder implements IDecoder{
 
 	private Gson jsonParser;
+	private GsonBuilder builder;
 	
 	public AllocineDecoder(IFactory factory){
 	
-		GsonBuilder builder = new GsonBuilder();
+		builder = new GsonBuilder();
 		
 		//Register class generator :
 		builder.registerTypeAdapter( IMovie.class , new AllocineInstanceCreator<IMovie>(factory));
@@ -41,11 +47,22 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IMovie.class , new MovieDecoder( factory ));
 		builder.registerTypeAdapter( ICasting.class , new CastingDecoder( factory ));
 		builder.registerTypeAdapter( IAllocineLink.class , new LinkDecoder( factory ));
-		builder.registerTypeAdapter(IPoster.class, new PosterDecoder(factory));
-		builder.registerTypeAdapter(IStats.class , new StatsDecoder(factory));
+		builder.registerTypeAdapter( IPoster.class, new PosterDecoder(factory));
+		builder.registerTypeAdapter( IStats.class , new StatsDecoder(factory));
+		builder.registerTypeAdapter( IRelease.class , new ReleaseDecoder(factory));
 		
 		jsonParser = builder.create();
 		
+	}
+	
+	public void addTypeAdapter( Type deserializeClass ,  JsonDeserializer<?> deserializer ){
+		builder.registerTypeAdapter( deserializeClass , deserializer );
+		jsonParser = builder.create();
+	}
+	
+	public void addTypeAdapter( Type deserializeClass ,  InstanceCreator<?> instanceCreator ){
+		builder.registerTypeAdapter( deserializeClass , instanceCreator );
+		jsonParser = builder.create();
 	}
 	
 	/**
@@ -62,6 +79,17 @@ public class AllocineDecoder implements IDecoder{
 	@Override
 	public IJsonResponse decodeMovieResponse(String json) {
 		return jsonParser.fromJson(json, MovieResponse.class);
+	}
+
+	@Override
+	public Gson getGson() {
+		return jsonParser;
+	}
+
+	@Override
+	public void addTypeAdapter(Type serializeClass, JsonSerializer<?> serializer) {
+		builder.registerTypeAdapter( serializeClass , serializer );
+		jsonParser = builder.create();
 	}
 	
 }

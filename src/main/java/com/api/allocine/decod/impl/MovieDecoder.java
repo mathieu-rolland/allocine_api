@@ -29,6 +29,8 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 	public IMovie deserialize(JsonElement json, Type type,
 			JsonDeserializationContext context) throws JsonParseException {
 
+		System.out.println("Input : " + json.toString() );
+		
 		IMovie m = factory.createMovie();
 
 		JsonObject obj = json.getAsJsonObject();
@@ -37,7 +39,15 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 		if( el != null ) m.setCode( el.getAsInt() );
 
 		el = obj.get("title");
-		if( el != null ) m.setTitle( el.getAsString() );
+		if( el != null ){
+			m.setTitle( el.getAsString() );
+		}
+		else{
+			el = obj.get("originalTitle");
+			if( el != null ){
+				m.setTitle( el.getAsString() );
+			}
+		}
 
 		el = obj.get("synopsis");
 		if( el != null ) m.setSynospis( el.getAsString() );
