@@ -1,6 +1,7 @@
 package com.api.allocine.model;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface IMovie {
 
@@ -32,5 +33,8 @@ public interface IMovie {
 	public String getSynospis();
 
 	public void setYear(int asInt);
+	
+	public Collection<IGenre> getGenre();
+	public void setGenre(Collection<IGenre> genre);
 	
 }

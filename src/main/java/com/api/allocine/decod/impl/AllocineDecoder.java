@@ -7,6 +7,7 @@ import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IFeed;
+import com.api.allocine.model.IGenre;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IPoster;
@@ -43,6 +44,7 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IAllocineLink.class , new AllocineInstanceCreator<IAllocineLink>(factory));
 		builder.registerTypeAdapter( IFeed.class , new AllocineInstanceCreator<IFeed>(factory));
 		builder.registerTypeAdapter( ISearchResponse.class , new AllocineInstanceCreator<ISearchResponse>(factory));
+		builder.registerTypeAdapter( IGenre.class , new AllocineInstanceCreator<IGenre>(factory));
 		
 		//register parsers :
 		builder.registerTypeAdapter( IMovie.class , new MovieDecoder( factory ));
@@ -51,6 +53,7 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IPoster.class, new PosterDecoder(factory));
 		builder.registerTypeAdapter( IStats.class , new StatsDecoder(factory));
 		builder.registerTypeAdapter( IRelease.class , new ReleaseDecoder(factory));
+		builder.registerTypeAdapter( IGenre.class , new GenreDecoder(factory));
 		
 		jsonParser = builder.create();
 		

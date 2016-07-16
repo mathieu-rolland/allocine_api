@@ -6,6 +6,7 @@ import java.util.Collection;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
+import com.api.allocine.model.IGenre;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
@@ -84,6 +85,13 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 			Type collectionType = new TypeToken<Collection<IAllocineLink>>(){}.getType();
 			Collection<IAllocineLink> link = context.deserialize( el , collectionType	);
 			if( link != null )  m.setLink(link);
+		}
+		
+		el = obj.get("genre");
+		if( el != null ){
+			Type collectionType = new TypeToken<Collection<IGenre>>(){}.getType();
+			Collection<IGenre> genres = context.deserialize( el , collectionType );
+			if( genres != null )  m.setGenre(genres);
 		}
 		
 		el = obj.get("productionYear");

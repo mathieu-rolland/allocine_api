@@ -25,12 +25,13 @@ public class Movie implements IMovie{
 	private IStats statistiques;
 	private IPoster poster;
 	private Collection<IAllocineLink> links;
-	private IGenre genre;
+	private Collection<IGenre> genre;
 	private String synospis;
 	private int duration;
 	
 	public Movie(){
 		links = new ArrayList<IAllocineLink>();
+		genre = new ArrayList<IGenre>();
 		release = new Release();
 //		casting = new Casting();
 		statistiques = new Stats();
@@ -110,11 +111,11 @@ public class Movie implements IMovie{
 		this.links = link;
 	}
 	
-	public IGenre getGenre() {
+	public Collection<IGenre> getGenre() {
 		return genre;
 	}
 
-	public void setGenre(IGenre genre) {
+	public void setGenre(Collection<IGenre> genre) {
 		this.genre = genre;
 	}
 

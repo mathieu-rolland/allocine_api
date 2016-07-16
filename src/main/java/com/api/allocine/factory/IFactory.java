@@ -6,6 +6,7 @@ import com.api.allocine.IAllocineAPI;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IFeed;
+import com.api.allocine.model.IGenre;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IPoster;
@@ -25,8 +26,10 @@ public interface IFactory {
 	public IRelease createRelease();
 	public IResult createResult();
 	public IStats createStats();
+	public IGenre createGenre();
 	public <T> T create(Type type);
 	public IAllocineAPI createSimpleAllocineAPI();
 	public ISearchResponse createSearchResponse();
+	
 	
 }

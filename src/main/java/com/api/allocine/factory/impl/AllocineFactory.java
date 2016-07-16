@@ -11,6 +11,7 @@ import com.api.allocine.impl.AllocineAPI;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IFeed;
+import com.api.allocine.model.IGenre;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IPoster;
@@ -21,6 +22,7 @@ import com.api.allocine.model.IStats;
 import com.api.allocine.model.impl.AllocineLink;
 import com.api.allocine.model.impl.Casting;
 import com.api.allocine.model.impl.Feed;
+import com.api.allocine.model.impl.Genre;
 import com.api.allocine.model.impl.SearchResponse;
 import com.api.allocine.model.impl.Movie;
 import com.api.allocine.model.impl.Poster;
@@ -93,6 +95,7 @@ public class AllocineFactory implements IFactory{
 		if( IResult.class.equals(type) ) return (T) createResult();
 		if( IStats.class.equals(type)) return (T) createStats();
 		if( ISearchResponse.class.equals(type)) return (T) createSearchResponse();
+		if( IGenre.class.equals(type)) return (T) createGenre();
 		return null;
 	}
 
@@ -102,6 +105,11 @@ public class AllocineFactory implements IFactory{
 	
 	public IAllocineAPI createSimpleAllocineAPI(){
 		return new AllocineAPI( createAllocineDecoder() , RESPONSE_FORMAT.JSON );
+	}
+
+	@Override
+	public IGenre createGenre() {
+		return new Genre();
 	}
 	
 }
