@@ -4,7 +4,6 @@ import java.lang.reflect.Type;
 
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IGenre;
-import com.api.allocine.model.IMovie;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;

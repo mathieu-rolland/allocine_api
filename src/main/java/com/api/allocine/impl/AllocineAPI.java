@@ -16,6 +16,8 @@ import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.api.allocine.IAllocineAPI;
 import com.api.allocine.decod.IDecoder;
@@ -26,6 +28,8 @@ import com.api.allocine.model.ISearchResponse;
 
 public class AllocineAPI implements IAllocineAPI {
 
+	Logger logger = LoggerFactory.getLogger( AllocineAPI.class );
+	
 	private static final String PARTNER_KEY = "100043982026";
 	private static final String PRIVATE_KEY = "29d185d98c984a359e6e6f26a0474269";
 	
@@ -61,11 +65,11 @@ public class AllocineAPI implements IAllocineAPI {
 		
 		String query = API_URL + "/" + new String( method.toString() ).toLowerCase() + "?" + parsedParams + "&sig=" + signature ;
 		
-		System.out.println(query);
+		logger.debug( "Query ALLOCINE : " + query );
 		
 		try {
 			String response = query( query );
-			System.out.println( response );
+			logger.debug( "Allocine response : " + response );
 			if( response != null && !"".equals(response)){
 				return generateResponse(method, response);
 			}
@@ -80,6 +84,8 @@ public class AllocineAPI implements IAllocineAPI {
 	@Override
 	public ISearchResponse searchMovies( String search ) throws UnsupportedEncodingException{
 		
+		logger.debug( "Search movie " + search );
+		
 		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
 		
 		params.put(ALLO_CINE_PARAMS.SEARCH, search );
@@ -91,6 +97,8 @@ public class AllocineAPI implements IAllocineAPI {
 
 	@Override
 	public IMovieResponse getMovieDetails(IMovie movie) throws UnsupportedEncodingException {
+		
+		logger.debug( "Search movie details of " + movie );
 		
 		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
 		
@@ -164,7 +172,6 @@ public class AllocineAPI implements IAllocineAPI {
 		if( method == ALLO_CINE_METHOD.MOVIE ){
 			response = decoder.decodeMovieResponse( json );
 		}
-		System.out.println( response );
 		return response;
 	}
 	

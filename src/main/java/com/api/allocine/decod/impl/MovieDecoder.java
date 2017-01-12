@@ -3,6 +3,8 @@ package com.api.allocine.decod.impl;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
+import org.slf4j.LoggerFactory;
+
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
@@ -18,10 +20,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.reflect.TypeToken;
 
+import org.slf4j.Logger;
+
 public class MovieDecoder implements JsonDeserializer<IMovie>{
 
 	private IFactory factory;
-
+	Logger logger = LoggerFactory.getLogger( MovieDecoder.class );
+	
 	public MovieDecoder(IFactory factory) {
 		this.factory = factory;
 	}
@@ -30,7 +35,7 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 	public IMovie deserialize(JsonElement json, Type type,
 			JsonDeserializationContext context) throws JsonParseException {
 
-		System.out.println("Input : " + json.toString() );
+		logger.debug("Input : " + json.toString() );
 		
 		IMovie m = factory.createMovie();
 
@@ -99,7 +104,7 @@ public class MovieDecoder implements JsonDeserializer<IMovie>{
 			m.setYear( el.getAsInt() );
 		}
 		
-		System.out.println( m );
+		logger.debug( String.valueOf(m) );
 
 		return m;
 	}

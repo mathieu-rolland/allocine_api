@@ -24,7 +24,11 @@ public class Launcher {
 			if( content.getMovies() != null ){
 				for( IMovie m : content.getMovies() ){
 					IMovieResponse movieResponse = api.getMovieDetails( m );
-					System.out.println( movieResponse.getMovie().getSynospis() );
+					if( movieResponse != null && movieResponse.getMovie() != null ){
+						System.out.println( "Movie " + movieResponse.getMovie().getTitle() + " fetch OK" );
+					}else{
+						System.out.println("Failed to get movie " + m.getCode() );
+					}
 				}
 			}
 		}catch(UnsupportedEncodingException e){
