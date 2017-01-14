@@ -95,6 +95,18 @@ public class AllocineAPI implements IAllocineAPI {
 		return (ISearchResponse) httpQuery( ALLO_CINE_METHOD.SEARCH , params );
 	}
 
+	public ISearchResponse searchSeries( String search ) throws UnsupportedEncodingException {
+logger.debug( "Search movie " + search );
+		
+		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+		
+		params.put(ALLO_CINE_PARAMS.SEARCH, search );
+		params.put(ALLO_CINE_PARAMS.FORMAT, String.valueOf( responseFormat ) );
+		params.put(ALLO_CINE_PARAMS.FILTER, String.valueOf( FILTER.SERIE ) );
+		
+		return (ISearchResponse) httpQuery( ALLO_CINE_METHOD.SEARCH , params );
+	}
+	
 	@Override
 	public IMovieResponse getMovieDetails(IMovie movie) throws UnsupportedEncodingException {
 		
@@ -165,12 +177,20 @@ public class AllocineAPI implements IAllocineAPI {
 	}
 	
 	private IJsonResponse generateResponse( ALLO_CINE_METHOD method , String json ) throws UnsupportedEncodingException{
+		
 		IJsonResponse response = null;
+		
 		if( method == ALLO_CINE_METHOD.SEARCH ){
+			logger.debug( " Decode search response " );
 			response = decoder.decodeSearchResponse( URLDecoder.decode( json , "UTF-8" ) );
 		}
 		if( method == ALLO_CINE_METHOD.MOVIE ){
+			logger.debug( " Decode movie response " );
 			response = decoder.decodeMovieResponse( json );
+		}
+		if( method == ALLO_CINE_METHOD.SERIE ){
+			logger.debug( " Decode serie response " );
+			response = decoder.decodeSerieResponse( json );
 		}
 		return response;
 	}

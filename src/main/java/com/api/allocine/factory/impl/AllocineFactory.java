@@ -10,6 +10,7 @@ import com.api.allocine.factory.IFactory;
 import com.api.allocine.impl.AllocineAPI;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
+import com.api.allocine.model.IChapter;
 import com.api.allocine.model.IFeed;
 import com.api.allocine.model.IGenre;
 import com.api.allocine.model.IJsonResponse;
@@ -18,12 +19,15 @@ import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
 import com.api.allocine.model.impl.AllocineLink;
 import com.api.allocine.model.impl.Casting;
+import com.api.allocine.model.impl.Chapter;
 import com.api.allocine.model.impl.Feed;
 import com.api.allocine.model.impl.Genre;
 import com.api.allocine.model.impl.SearchResponse;
+import com.api.allocine.model.impl.Serie;
 import com.api.allocine.model.impl.Movie;
 import com.api.allocine.model.impl.Poster;
 import com.api.allocine.model.impl.Release;
@@ -96,7 +100,17 @@ public class AllocineFactory implements IFactory{
 		if( IStats.class.equals(type)) return (T) createStats();
 		if( ISearchResponse.class.equals(type)) return (T) createSearchResponse();
 		if( IGenre.class.equals(type)) return (T) createGenre();
+		if( ISerie.class.equals(type)) return (T) createSerie();
+		if( IChapter.class.equals(type)) return (T) createChapter();
 		return null;
+	}
+
+	public IChapter createChapter() {
+		return new Chapter();
+	}
+
+	public ISerie createSerie() {
+		return new Serie();
 	}
 
 	public IDecoder createAllocineDecoder(){

@@ -6,6 +6,7 @@ import com.api.allocine.decod.IDecoder;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IAllocineLink;
 import com.api.allocine.model.ICasting;
+import com.api.allocine.model.IChapter;
 import com.api.allocine.model.IFeed;
 import com.api.allocine.model.IGenre;
 import com.api.allocine.model.IJsonResponse;
@@ -14,6 +15,7 @@ import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
 import com.api.allocine.model.impl.MovieResponse;
 import com.api.allocine.model.impl.SearchResponse;
@@ -45,6 +47,8 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IFeed.class , new AllocineInstanceCreator<IFeed>(factory));
 		builder.registerTypeAdapter( ISearchResponse.class , new AllocineInstanceCreator<ISearchResponse>(factory));
 		builder.registerTypeAdapter( IGenre.class , new AllocineInstanceCreator<IGenre>(factory));
+		builder.registerTypeAdapter( ISerie.class , new AllocineInstanceCreator<IGenre>(factory));
+		builder.registerTypeAdapter( IChapter.class , new AllocineInstanceCreator<IGenre>(factory));
 		
 		//register parsers :
 		builder.registerTypeAdapter( IMovie.class , new MovieDecoder( factory ));
@@ -99,6 +103,12 @@ public class AllocineDecoder implements IDecoder{
 	public void addTypeAdapter(Type serializeClass, JsonSerializer<?> serializer) {
 		builder.registerTypeAdapter( serializeClass , serializer );
 		jsonParser = builder.create();
+	}
+
+	@Override
+	public IJsonResponse decodeSerieResponse(String json) {
+		
+		return null;
 	}
 	
 }

@@ -13,6 +13,7 @@ public interface IDecoder {
 
 	public IJsonResponse decodeSearchResponse(String json);
 	public IJsonResponse decodeMovieResponse(String json);
+	public IJsonResponse decodeSerieResponse(String json);
 	
 	public void addTypeAdapter( Type deserializeClass ,  InstanceCreator<?> instanceCreator );
 	public void addTypeAdapter( Type deserializeClass ,  JsonDeserializer<?> deserializer );
