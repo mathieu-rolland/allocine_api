@@ -7,11 +7,12 @@ import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IMovieResponse;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISerie;
 
 public interface IAllocineAPI {
 
 	public enum ALLO_CINE_METHOD{
-		SEARCH, MOVIE
+		SEARCH, MOVIE, SERIE
 	}
 	
 	public enum ALLO_CINE_PARAMS{
@@ -22,6 +23,11 @@ public interface IAllocineAPI {
 		MOVIE{
 			public String toString(){
 				return "movie";
+			}
+		},
+		SERIE{
+			public String toString(){
+				return "tvseries";
 			}
 		}
 	}
@@ -36,6 +42,7 @@ public interface IAllocineAPI {
 	
 	public IJsonResponse httpQuery(ALLO_CINE_METHOD search, Map<ALLO_CINE_PARAMS, String> params) throws UnsupportedEncodingException;
 	public IMovieResponse getMovieDetails( IMovie movie ) throws UnsupportedEncodingException;
-	public ISearchResponse searchMovies(String search) throws UnsupportedEncodingException;
+	public ISearchResponse<ISerie> searchSeries(String search) throws UnsupportedEncodingException;
+	public ISearchResponse<IMovie> searchMovies(String search) throws UnsupportedEncodingException;
 	
 }
