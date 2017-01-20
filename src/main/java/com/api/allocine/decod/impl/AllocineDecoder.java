@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import com.api.allocine.decod.IDecoder;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.model.IAllocineLink;
+import com.api.allocine.model.IAllocineObject;
 import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IChapter;
 import com.api.allocine.model.IFeed;
@@ -19,6 +20,7 @@ import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
 import com.api.allocine.model.impl.MovieResponse;
 import com.api.allocine.model.impl.SearchResponse;
+import com.api.allocine.model.impl.SerieResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.InstanceCreator;
@@ -36,6 +38,8 @@ public class AllocineDecoder implements IDecoder{
 		builder = new GsonBuilder();
 		
 		//Register class generator :
+		builder.registerTypeAdapter( ISearchResponse.class , new AllocineInstanceCreator<ISearchResponse<IAllocineObject>>(factory));
+		builder.registerTypeAdapter( IFeed.class , new AllocineInstanceCreator<IFeed<IAllocineObject>>(factory));
 		builder.registerTypeAdapter( IMovie.class , new AllocineInstanceCreator<IMovie>(factory));
 		builder.registerTypeAdapter( IRelease.class , new AllocineInstanceCreator<IRelease>(factory));
 		builder.registerTypeAdapter( IResult.class , new AllocineInstanceCreator<IResult>(factory));
@@ -44,13 +48,13 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IJsonResponse.class , new AllocineInstanceCreator<IJsonResponse>(factory));
 		builder.registerTypeAdapter( IStats.class , new AllocineInstanceCreator<IStats>(factory));
 		builder.registerTypeAdapter( IAllocineLink.class , new AllocineInstanceCreator<IAllocineLink>(factory));
-		builder.registerTypeAdapter( IFeed.class , new AllocineInstanceCreator<IFeed>(factory));
-		builder.registerTypeAdapter( ISearchResponse.class , new AllocineInstanceCreator<ISearchResponse>(factory));
+		builder.registerTypeAdapter( ISearchResponse.class , new AllocineInstanceCreator<ISearchResponse<IAllocineObject>>(factory));
 		builder.registerTypeAdapter( IGenre.class , new AllocineInstanceCreator<IGenre>(factory));
 		builder.registerTypeAdapter( ISerie.class , new AllocineInstanceCreator<IGenre>(factory));
 		builder.registerTypeAdapter( IChapter.class , new AllocineInstanceCreator<IGenre>(factory));
 		
 		//register parsers :
+		builder.registerTypeAdapter( IFeed.class , new FeedDecoder<IAllocineObject>(factory));
 		builder.registerTypeAdapter( IMovie.class , new MovieDecoder( factory ));
 		builder.registerTypeAdapter( ICasting.class , new CastingDecoder( factory ));
 		builder.registerTypeAdapter( IAllocineLink.class , new LinkDecoder( factory ));
@@ -58,6 +62,7 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IStats.class , new StatsDecoder(factory));
 		builder.registerTypeAdapter( IRelease.class , new ReleaseDecoder(factory));
 		builder.registerTypeAdapter( IGenre.class , new GenreDecoder(factory));
+		builder.registerTypeAdapter( ISerie.class , new SerieDecoder(factory));
 		
 		jsonParser = builder.create();
 		
@@ -107,8 +112,7 @@ public class AllocineDecoder implements IDecoder{
 
 	@Override
 	public IJsonResponse decodeSerieResponse(String json) {
-		
-		return null;
+		return jsonParser.fromJson(json, SerieResponse.class);
 	}
 	
 }

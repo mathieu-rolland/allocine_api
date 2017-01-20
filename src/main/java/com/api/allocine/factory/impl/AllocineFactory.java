@@ -2,6 +2,9 @@ package com.api.allocine.factory.impl;
 
 import java.lang.reflect.Type;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.api.allocine.IAllocineAPI;
 import com.api.allocine.IAllocineAPI.RESPONSE_FORMAT;
 import com.api.allocine.decod.IDecoder;
@@ -9,6 +12,7 @@ import com.api.allocine.decod.impl.AllocineDecoder;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.impl.AllocineAPI;
 import com.api.allocine.model.IAllocineLink;
+import com.api.allocine.model.IAllocineObject;
 import com.api.allocine.model.ICasting;
 import com.api.allocine.model.IChapter;
 import com.api.allocine.model.IFeed;
@@ -36,6 +40,8 @@ import com.api.allocine.model.impl.Stats;
 
 public class AllocineFactory implements IFactory{
 
+	Logger logger = LoggerFactory.getLogger( AllocineFactory.class );
+	
 	@Override
 	public IMovie createMovie() {
 		return new Movie();
@@ -52,8 +58,8 @@ public class AllocineFactory implements IFactory{
 	}
 
 	@Override
-	public IFeed createFeed() {
-		return new Feed();
+	public IFeed<IAllocineObject> createFeed() {
+		return new Feed<IAllocineObject>();
 	}
 
 	@Override
@@ -82,7 +88,7 @@ public class AllocineFactory implements IFactory{
 	}
 
 	@Override
-	public ISearchResponse createSearchResponse(){
+	public ISearchResponse<IAllocineObject> createSearchResponse(){
 		return new SearchResponse();
 	}
 	
@@ -102,6 +108,8 @@ public class AllocineFactory implements IFactory{
 		if( IGenre.class.equals(type)) return (T) createGenre();
 		if( ISerie.class.equals(type)) return (T) createSerie();
 		if( IChapter.class.equals(type)) return (T) createChapter();
+		if( IFeed.class.equals(type)) return (T) createFeed();
+		logger.warn("Class " + type.toString() + " not exists in Factory");
 		return null;
 	}
 

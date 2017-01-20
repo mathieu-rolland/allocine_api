@@ -1,7 +1,8 @@
 package com.api.allocine.model;
 
-public interface ISearchResponse extends IJsonResponse{
+public interface ISearchResponse<T> extends IJsonResponse{
 
-	public IFeed getFeed();
+	public IFeed<T> getFeed();
+	public void setFeed(IFeed<IAllocineObject> feed);
 	
 }

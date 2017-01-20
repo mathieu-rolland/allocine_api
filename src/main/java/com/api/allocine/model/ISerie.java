@@ -2,7 +2,7 @@ package com.api.allocine.model;
 
 import java.util.List;
 
-public interface ISerie {
+public interface ISerie extends IAllocineObject {
 
 	public int getCode();
 	public ICasting getCasting();

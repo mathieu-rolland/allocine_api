@@ -1,9 +1,8 @@
 package com.api.allocine.model;
 
 import java.util.Collection;
-import java.util.List;
 
-public interface IMovie {
+public interface IMovie extends IAllocineObject {
 
 	void setTitle(String asString);
 	public String getTitle();
