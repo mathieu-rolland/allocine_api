@@ -48,14 +48,20 @@ public class AllocineAPI implements IAllocineAPI {
 	}
 	
 	@Override
-	public IJsonResponse httpQuery( ALLO_CINE_METHOD method, Map<ALLO_CINE_PARAMS, String> params ) throws UnsupportedEncodingException{
+	public IJsonResponse httpQuery( ALLO_CINE_METHOD method, Map<ALLO_CINE_PARAMS, String> query ) throws UnsupportedEncodingException{
 		
 		String sed = sdf.format( new Date() );
 		
-		params.put( ALLO_CINE_PARAMS.PARTNER , PARTNER_KEY );
-		params.put( ALLO_CINE_PARAMS.SED , sed);
+		Map<ALLO_CINE_PARAMS, String> inputParams = new HashMap<ALLO_CINE_PARAMS, String>();
 		
-		String parsedParams = formatParametersToHTTP(params);
+		inputParams.put( ALLO_CINE_PARAMS.PARTNER , PARTNER_KEY );
+		inputParams.put( ALLO_CINE_PARAMS.SED , sed);
+		
+		for(ALLO_CINE_PARAMS param : query.keySet()){
+			inputParams.put( param , query.get(param) );
+		}
+		
+		String parsedParams = formatParametersToHTTP( inputParams );
 		String signature;
 		
 		try {
@@ -65,12 +71,12 @@ public class AllocineAPI implements IAllocineAPI {
 			return null;
 		}
 		
-		String query = API_URL + "/" + new String( method.toString() ).toLowerCase() + "?" + parsedParams + "&sig=" + signature ;
+		String urlQuery = API_URL + "/" + new String( method.toString() ).toLowerCase() + "?" + parsedParams + "&sig=" + signature ;
 		
-		logger.debug( "Query ALLOCINE : " + query );
+		logger.debug( "Query ALLOCINE : " + urlQuery );
 		
 		try {
-			String response = query( query );
+			String response = query( urlQuery );
 			logger.debug( "Allocine response : " + response );
 			if( response != null && !"".equals(response)){
 				return generateResponse(method, response);

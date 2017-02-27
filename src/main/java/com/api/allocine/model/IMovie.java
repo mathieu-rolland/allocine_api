@@ -28,12 +28,14 @@ public interface IMovie extends IAllocineObject {
 	public void setDuration(int duration);
 	
 	public void addLink( IAllocineLink link );
-
+	
+	public Collection<IAllocineLink> getLinks();
+	
 	public String getSynospis();
 
 	public void setYear(int asInt);
 	
 	public Collection<IGenre> getGenre();
 	public void setGenre(Collection<IGenre> genre);
-	
+	public IPoster getPoster();
 }

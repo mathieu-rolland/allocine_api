@@ -103,7 +103,7 @@ public class Movie implements IMovie{
 		this.poster = p;
 	}
 	
-	public Collection<IAllocineLink> getLink() {
+	public Collection<IAllocineLink> getLinks() {
 		return links;
 	}
 	

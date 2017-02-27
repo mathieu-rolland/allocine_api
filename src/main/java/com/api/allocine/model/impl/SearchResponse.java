@@ -8,6 +8,10 @@ public class SearchResponse implements ISearchResponse<IAllocineObject>{
 
 	private IFeed<IAllocineObject> feed;
 	
+	public SearchResponse(){
+		this.feed = new Feed<IAllocineObject>();
+	}
+	
 	public IFeed<IAllocineObject> getFeed() {
 		return feed;
 	}
