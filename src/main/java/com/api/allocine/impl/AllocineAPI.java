@@ -21,10 +21,14 @@ import org.slf4j.LoggerFactory;
 
 import com.api.allocine.IAllocineAPI;
 import com.api.allocine.decod.IDecoder;
+import com.api.allocine.model.IChapter;
+import com.api.allocine.model.IChapterResponse;
 import com.api.allocine.model.IJsonResponse;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IMovieResponse;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISeason;
+import com.api.allocine.model.ISeasonResponse;
 import com.api.allocine.model.ISerie;
 import com.api.allocine.model.ISerieResponse;
 
@@ -199,13 +203,23 @@ logger.debug( "Search movie " + search );
 			logger.debug( " Decode search response " );
 			response = decoder.decodeSearchResponse( URLDecoder.decode( json , "UTF-8" ) );
 		}
-		if( method == ALLO_CINE_METHOD.MOVIE ){
-			logger.debug( " Decode movie response " );
+		else if( method == ALLO_CINE_METHOD.MOVIE ){
+			logger.debug( " Decode movie response " + json);
 			response = decoder.decodeMovieResponse( json );
 		}
-		if( method == ALLO_CINE_METHOD.TVSERIES ){
+		else if( method == ALLO_CINE_METHOD.TVSERIES ){
 			logger.debug( " Decode serie response " );
 			response = decoder.decodeSerieResponse( json );
+		}
+		else if( method == ALLO_CINE_METHOD.SEASON ){
+			logger.debug( "Decode season response" );
+			response = decoder.decodeSeasonResponse(json);
+		}
+		else if( method == ALLO_CINE_METHOD.EPISODE ){
+			logger.debug( "Decode episode response" );
+			response = decoder.decodeChapterResponse(json);
+		}else{
+			logger.error("Unknown decoder for method {} " , method);
 		}
 		return response;
 	}
@@ -221,6 +235,34 @@ logger.debug( "Search movie " + search );
 		params.put(ALLO_CINE_PARAMS.PROFILE, "large" );
 		
 		return (ISerieResponse) httpQuery( ALLO_CINE_METHOD.TVSERIES , params );
+	}
+
+	@Override
+	public ISeasonResponse getSeasonDetails(ISeason season) throws UnsupportedEncodingException {
+		
+		logger.debug( "Search season details of " + season );
+		
+		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+		
+		params.put(ALLO_CINE_PARAMS.CODE, String.valueOf(season.getCode()) );
+		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
+		params.put(ALLO_CINE_PARAMS.PROFILE, "small" );
+		
+		return (ISeasonResponse) httpQuery( ALLO_CINE_METHOD.SEASON , params );
+		
+	}
+
+	@Override
+	public IChapterResponse getChapterDetails(IChapter chapter) throws UnsupportedEncodingException {
+		logger.debug( "Search chapter details of " + chapter );
+		
+		Map<AllocineAPI.ALLO_CINE_PARAMS, String> params = new HashMap<AllocineAPI.ALLO_CINE_PARAMS, String>();
+		
+		params.put(ALLO_CINE_PARAMS.CODE, String.valueOf(chapter.getCode()) );
+		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
+		params.put(ALLO_CINE_PARAMS.PROFILE, "medium" );
+		
+		return (IChapterResponse) httpQuery( ALLO_CINE_METHOD.EPISODE , params );
 	}
 	
 }

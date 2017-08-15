@@ -23,6 +23,7 @@ import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISeason;
 import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
 import com.api.allocine.model.impl.AllocineLink;
@@ -31,7 +32,8 @@ import com.api.allocine.model.impl.Chapter;
 import com.api.allocine.model.impl.Feed;
 import com.api.allocine.model.impl.Genre;
 import com.api.allocine.model.impl.SearchResponse;
-import com.api.allocine.model.impl.Serie;
+import com.api.allocine.model.impl.Season;
+import com.api.allocine.model.impl.Series;
 import com.api.allocine.model.impl.Movie;
 import com.api.allocine.model.impl.Poster;
 import com.api.allocine.model.impl.Release;
@@ -95,6 +97,7 @@ public class AllocineFactory implements IFactory{
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T create(Type type) {
+		logger.debug( "Create type using " + type );
 		if( IMovie.class.equals(type) ) return (T) createMovie();
 		if( IPoster.class.equals(type)) return (T) createPoster();
 		if( IAllocineLink.class.equals(type)) return (T) createLink();
@@ -118,7 +121,7 @@ public class AllocineFactory implements IFactory{
 	}
 
 	public ISerie createSerie() {
-		return new Serie();
+		return new Series();
 	}
 
 	public IDecoder createAllocineDecoder(){
@@ -132,6 +135,11 @@ public class AllocineFactory implements IFactory{
 	@Override
 	public IGenre createGenre() {
 		return new Genre();
+	}
+
+	@Override
+	public ISeason createSeason() {
+		return new Season();
 	}
 	
 }

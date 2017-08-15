@@ -14,5 +14,11 @@ public class MovieResponse implements IMovieResponse {
 	public void setMovie(IMovie movie) {
 		this.movie = movie;
 	}
+
+	@Override
+	public String toString() {
+		return "MovieResponse [movie=" + movie + ", getMovie()=" + getMovie() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	}
 	
 }

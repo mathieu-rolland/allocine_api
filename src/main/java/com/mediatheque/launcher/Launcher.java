@@ -7,10 +7,14 @@ import java.util.Iterator;
 import com.api.allocine.IAllocineAPI;
 import com.api.allocine.factory.IFactory;
 import com.api.allocine.factory.impl.AllocineFactory;
+import com.api.allocine.model.IChapter;
+import com.api.allocine.model.IChapterResponse;
 import com.api.allocine.model.IFeed;
 import com.api.allocine.model.IMovie;
 import com.api.allocine.model.IMovieResponse;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISeason;
+import com.api.allocine.model.ISeasonResponse;
 import com.api.allocine.model.ISerie;
 import com.api.allocine.model.ISerieResponse;
 
@@ -42,19 +46,42 @@ public class Launcher {
 		}
 		
 		try{
-			ISearchResponse<ISerie> response = api.searchSeries( "malcom" );
+			ISearchResponse<ISerie> response = api.searchSeries( "Game of throne" );
 			IFeed<ISerie> content = response.getFeed();
-			System.out.println( content );
+			System.out.println( "Search gives : " + content );
 			if( content.getApiAllocineObject() != null ){
 				Iterator<ISerie> series = ((ArrayList<ISerie>) content.getApiAllocineObject()).iterator();
 				while( series.hasNext() ){
-					ISerie s = series.next();
-					System.out.println(s);
-					ISerieResponse serieResponse = api.getSerieDetails(s);
+					
+					ISerie searchSerie = series.next();
+					
+					System.out.println(searchSerie);
+					
+					ISerieResponse serieResponse = api.getSerieDetails(searchSerie);
+					System.out.println("Loaded serie : " + serieResponse.getSerie());
 					if( serieResponse != null && serieResponse.getSerie() != null ){
-						System.out.println( "Movie " + serieResponse.getSerie().getTitle() + " fetch OK" );
+						
+						System.out.println( "Serie " + serieResponse.getSerie().getTitle() + " fetch OK" );
+						System.out.println( "Number of loaded seasons : " + serieResponse.getSerie().getSeasonCount() + " fetch OK" );
+						
+						//Season details : 
+						Iterator<ISeason> iterator = serieResponse.getSerie().getSeasons().iterator();
+						iterator.next();
+						ISeason season = iterator.next();
+						//Get Season details :
+						ISeasonResponse seasonResponse = api.getSeasonDetails( season );
+						System.out.println( seasonResponse == null ? "null" : seasonResponse.getSeason() );
+						
+						//Fetch for the first episode : 
+						if( season.getChapters().size() > 0 ){
+							System.out.println("call get episode");
+							IChapter chapter = season.getChapters().iterator().next();
+							IChapterResponse chapterResponse = api.getChapterDetails( chapter );
+							System.out.println( chapterResponse.getChapter() );
+						}
+						
 					}else{
-						System.out.println("Failed to get movie " + s.getCode() );
+						System.out.println("Failed to get movie " + searchSerie.getCode() );
 					}
 				}
 			}

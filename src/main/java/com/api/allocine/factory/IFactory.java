@@ -15,6 +15,7 @@ import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISeason;
 import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
 
@@ -35,4 +36,5 @@ public interface IFactory {
 	public ISerie createSerie();
 	public IChapter createChapter();
 	public IFeed<IAllocineObject> createFeed();
+	public ISeason createSeason();
 }

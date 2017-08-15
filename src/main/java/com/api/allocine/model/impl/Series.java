@@ -1,15 +1,15 @@
 package com.api.allocine.model.impl;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import com.api.allocine.model.ICasting;
-import com.api.allocine.model.IChapter;
 import com.api.allocine.model.IPoster;
+import com.api.allocine.model.ISeason;
 import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
 
-public class Serie implements ISerie {
+public class Series implements ISerie {
 
 	private int code;
 	private int seasonCount;
@@ -18,11 +18,12 @@ public class Serie implements ISerie {
 	private ICasting casting;
 	private String title;
 	private String description;
-	private List<IChapter> chapters;
+	private Collection<ISeason> seasons;
 	private int year;
+	private String productionStatus;
 	
-	public Serie(){
-		this.chapters = new ArrayList<IChapter>();
+	public Series(){
+		this.seasons = new ArrayList<ISeason>();
 	}
 	
 	public String getTitle() {
@@ -40,26 +41,13 @@ public class Serie implements ISerie {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public List<IChapter> getChapters() {
-		return chapters;
-	}
-	
-	public void setChapters(List<IChapter> chapters) {
-		this.chapters = chapters;
-	}
-	
+		
 	public int getYear() {
 		return year;
 	}
 	
 	public void setYear(int year) {
 		this.year = year;
-	}
-	
-	@Override
-	public void addChapter(IChapter chapter) {
-		chapters.add(chapter);
 	}
 
 	public int getCode() {
@@ -103,11 +91,27 @@ public class Serie implements ISerie {
 		this.seasonCount = seasonCount;
 	}
 
+	public String getProductionStatus() {
+		return productionStatus;
+	}
+
+	public void setProductionStatus(String productionStatus) {
+		this.productionStatus = productionStatus;
+	}
+
+	public Collection<ISeason> getSeasons() {
+		return seasons;
+	}
+
+	public void setSeasons(Collection<ISeason> seasons) {
+		this.seasons = seasons;
+	}
+
 	@Override
 	public String toString() {
-		return "Serie [code=" + code + ", seasonCount=" + seasonCount + ", stats=" + stats + ", poster=" + poster
-				+ ", casting=" + casting + ", title=" + title + ", description=" + description + ", chapters="
-				+ chapters + ", year=" + year + "]";
+		return "Series [code=" + code + ", seasonCount=" + seasonCount + ", stats=" + stats + ", poster=" + poster
+				+ ", casting=" + casting + ", title=" + title + ", description=" + description + ", seasons=" + seasons
+				+ ", year=" + year + ", productionStatus=" + productionStatus + "]";
 	}
 	
 }

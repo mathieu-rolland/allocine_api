@@ -16,10 +16,13 @@ import com.api.allocine.model.IPoster;
 import com.api.allocine.model.IRelease;
 import com.api.allocine.model.IResult;
 import com.api.allocine.model.ISearchResponse;
+import com.api.allocine.model.ISeason;
 import com.api.allocine.model.ISerie;
 import com.api.allocine.model.IStats;
+import com.api.allocine.model.impl.ChapterResponse;
 import com.api.allocine.model.impl.MovieResponse;
 import com.api.allocine.model.impl.SearchResponse;
+import com.api.allocine.model.impl.SeasonResponse;
 import com.api.allocine.model.impl.SerieResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,8 +53,9 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IAllocineLink.class , new AllocineInstanceCreator<IAllocineLink>(factory));
 		builder.registerTypeAdapter( ISearchResponse.class , new AllocineInstanceCreator<ISearchResponse<IAllocineObject>>(factory));
 		builder.registerTypeAdapter( IGenre.class , new AllocineInstanceCreator<IGenre>(factory));
-		builder.registerTypeAdapter( ISerie.class , new AllocineInstanceCreator<IGenre>(factory));
-		builder.registerTypeAdapter( IChapter.class , new AllocineInstanceCreator<IGenre>(factory));
+		builder.registerTypeAdapter( ISerie.class , new AllocineInstanceCreator<ISerie>(factory));
+		builder.registerTypeAdapter( ISeason.class , new AllocineInstanceCreator<ISeason>(factory));
+		builder.registerTypeAdapter( IChapter.class , new AllocineInstanceCreator<IChapter>(factory));
 		
 		//register parsers :
 		builder.registerTypeAdapter( IFeed.class , new FeedDecoder<IAllocineObject>(factory));
@@ -63,6 +67,9 @@ public class AllocineDecoder implements IDecoder{
 		builder.registerTypeAdapter( IRelease.class , new ReleaseDecoder(factory));
 		builder.registerTypeAdapter( IGenre.class , new GenreDecoder(factory));
 		builder.registerTypeAdapter( ISerie.class , new SerieDecoder(factory));
+		builder.registerTypeAdapter( ISeason.class , new SeasonDecoder(factory));
+		builder.registerTypeAdapter( IChapter.class , new ChapterDecoder(factory));
+		
 		
 		jsonParser = builder.create();
 		
@@ -99,6 +106,14 @@ public class AllocineDecoder implements IDecoder{
 		return jsonParser.fromJson(json, MovieResponse.class);
 	}
 
+	public IJsonResponse decodeSeasonResponse(String json){
+		return jsonParser.fromJson(json, SeasonResponse.class );
+	}
+	
+	public IJsonResponse decodeChapterResponse(String json){
+		return jsonParser.fromJson(json, ChapterResponse.class );
+	}
+	
 	@Override
 	public Gson getGson() {
 		return jsonParser;

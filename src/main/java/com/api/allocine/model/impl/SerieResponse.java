@@ -5,16 +5,16 @@ import com.api.allocine.model.ISerieResponse;
 
 public class SerieResponse implements ISerieResponse {
 
-	private ISerie serie;
+	private ISerie tvseries;
 	
 	@Override
 	public ISerie getSerie() {
-		return serie;
+		return tvseries;
 	}
 
 	@Override
 	public void setSerie(ISerie serie) {
-		this.serie = serie;
+		this.tvseries = serie;
 	}
 
 }

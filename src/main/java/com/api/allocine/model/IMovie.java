@@ -38,4 +38,5 @@ public interface IMovie extends IAllocineObject {
 	public Collection<IGenre> getGenre();
 	public void setGenre(Collection<IGenre> genre);
 	public IPoster getPoster();
+	public ICasting getCasting();
 }
