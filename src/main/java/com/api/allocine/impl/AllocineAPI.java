@@ -235,6 +235,7 @@ logger.debug( "Search movie " + search );
 		params.put(ALLO_CINE_PARAMS.PROFILE, "large" );
 		
 		return (ISerieResponse) httpQuery( ALLO_CINE_METHOD.TVSERIES , params );
+		
 	}
 
 	@Override
@@ -246,7 +247,7 @@ logger.debug( "Search movie " + search );
 		
 		params.put(ALLO_CINE_PARAMS.CODE, String.valueOf(season.getCode()) );
 		params.put(ALLO_CINE_PARAMS.FORMAT, "json" );
-		params.put(ALLO_CINE_PARAMS.PROFILE, "small" );
+		params.put(ALLO_CINE_PARAMS.PROFILE, "large" );
 		
 		return (ISeasonResponse) httpQuery( ALLO_CINE_METHOD.SEASON , params );
 		
